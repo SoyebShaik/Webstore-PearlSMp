@@ -2,104 +2,90 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PearlSMP - Store</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>PearlSMP | Premium Store</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="../CSS/Base.css">
-    <link rel="stylesheet" href="../CSS/Sections/Navbar.css">
     <link rel="stylesheet" href="../CSS/Sections/Main.css">
-    <link rel="stylesheet" href="../CSS/Sections/Header.css">
-    
-    <style>
-        /* Temporary internal styles to ensure the ShulkerMC theme applies immediately */
-        body { background-color: #0a0e18; color: #fff; font-family: sans-serif; }
-        .container { max-width: 1000px; margin: auto; padding: 20px; }
-        .shulker-header { text-align: center; padding: 40px 0; }
-        .shulker-header img { max-width: 250px; }
-        
-        /* Category Bar */
-        .category-bar {
-            background: #111827;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        /* Mobile Menu (Hidden by default) */
-        .nav-mobile-menu {
-            display: none; 
-            flex-direction: column;
-            background: #111827;
-            border-top: 1px solid #1f2937;
-        }
-        .nav-mobile-menu.active { display: flex; }
-        .nav-mobile-menu a { padding: 15px; color: white; text-decoration: none; border-bottom: 1px solid #1f2937; }
-
-        /* Welcome Box */
-        .welcome-box {
-            background: #111827;
-            border-radius: 8px;
-            margin-top: 20px;
-            padding: 25px;
-            border-bottom: 3px solid #3b82f6;
-        }
-        .welcome-title { color: #3b82f6; display: flex; align-items: center; gap: 10px; font-size: 24px; margin-bottom: 20px; }
-        .welcome-content { line-height: 1.6; color: #9ca3af; }
-        .welcome-content a { color: #3b82f6; text-decoration: none; }
-    </style>
+    <link rel="stylesheet" href="../CSS/Sections/Navbar.css">
 </head>
 
 <body>
-
     <div class="container">
-        <header class="shulker-header">
-            <img src="../Images/logo.webp" alt="PearlSMP Logo">
+        <header class="shulker-logo">
+            <img src="../Images/logo.webp" alt="PearlSMP">
         </header>
 
-        <nav class="nav-wrapper">
-            <div class="category-bar" id="menu-toggle">
+        <div class="nav-container">
+            <div class="category-header" id="mobile-toggle">
                 <span>Choose Category</span>
-                <i class="fas fa-bars"></i> </div>
-            
-            <div class="nav-mobile-menu" id="mobile-menu">
-                <a href="../HTML/Index.html">Home</a> 
-                <a href="https://yourstore.tebex.io/category/ranks">Ranks</a>
-                <a href="https://yourstore.tebex.io/category/keys">Crate Keys</a>
-                <a href="https://discord.gg/yourlink">Discord</a> 
+                <i class="fas fa-bars"></i>
             </div>
-        </nav>
 
-        <main class="welcome-box">
-            <div class="welcome-title">
-                <i class="fas fa-home"></i> Welcome to <span style="color: #3b82f6; margin-left: 5px;">PearlSMP</span>
+            <nav class="nav-links" id="nav-menu">
+                <a href="#">Home</a>
+                <a href="#">Ranks</a>
+                <a href="#">Crate Keys</a>
+                <a href="#">Discord</a>
+            </nav>
+
+            <div class="user-control-bar">
+                <div class="user-login" onclick="updateSkin()">
+                    <img id="skin-head" src="https://mc-heads.net/avatar/steve" alt="avatar">
+                    <span id="player-name">Login</span>
+                </div>
+                <div class="currency-wrap">
+                    <div class="currency-trigger" id="currency-switch">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span id="current-code">USD</span>
+                        <i class="fas fa-caret-down"></i>
+                    </div>
+                    <i class="fas fa-shopping-basket basket-icon"></i>
+                </div>
+            </div>
+        </div>
+
+        <main class="welcome-section">
+            <div class="section-header">
+                <i class="fas fa-home"></i> Welcome to <span>PearlSMP</span>
             </div>
             
-            <div class="welcome-content">
+            <div class="welcome-body">
                 <p>Welcome</p>
-                <p>If you have made a purchase but haven't received it then please make a ticket in our support Discord server for help. Any billing issues or other payment-related inquiries can be sent by creating a ticket on our support Discord server, where you will receive a response within 12 hours.</p>
+                <p>If you have made a purchase but haven't received it then please make a ticket in our support Discord server for help. Responses are typically sent within 12 hours.</p>
                 
-                <p>Or use our Contact Email: <a href="mailto:support@pearlsmp.com">support@pearlsmp.com</a></p>
+                <p>Contact Email: <a href="mailto:support@pearlsmp.com">support@pearlsmp.com</a></p>
                 
-                <p><strong>Refund policy</strong></p>
-                <p>All payments are final and non-refundable. Initiating a chargeback or opening a PayPal dispute will result in a permanent and irreversible ban from all of our servers and other Minecraft stores.</p>
+                <strong>Refund policy</strong>
+                <p>All payments are final and non-refundable. Initiating a chargeback or opening a PayPal dispute will result in a permanent and irreversible ban from our servers.</p>
             </div>
         </main>
     </div>
 
     <script>
-        const menuToggle = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
+        // Hamburger Toggle
+        const toggle = document.getElementById('mobile-toggle');
+        const menu = document.getElementById('nav-menu');
+        toggle.onclick = () => menu.classList.toggle('active');
 
-        menuToggle.addEventListener('click', function() {
-            // This toggles the 'active' class which shows/hides the menu
-            mobileMenu.classList.toggle('active');
-        });
+        // Dynamic Skin Logic
+        function updateSkin() {
+            const name = prompt("Enter your Minecraft Username:");
+            if (name) {
+                document.getElementById('skin-head').src = `https://mc-heads.net/avatar/${name}`;
+                document.getElementById('player-name').innerText = name;
+            }
+        }
+
+        // Real Currency Logic (INR/USD)
+        const curBtn = document.getElementById('currency-switch');
+        const curText = document.getElementById('current-code');
+        curBtn.onclick = () => {
+            const isUSD = curText.innerText === "USD";
+            curText.innerText = isUSD ? "INR" : "USD";
+            alert(`Currency changed to ${curText.innerText}. Checkout will proceed in this currency.`);
+        };
     </script>
-
 </body>
-</html>
+                                      </html>
