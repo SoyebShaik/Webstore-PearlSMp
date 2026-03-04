@@ -1,56 +1,119 @@
-<div class="currency-wrap">
-    <div class="currency-trigger" id="currency-switch">
-        <i class="fas fa-money-bill-wave"></i>
-        <span id="current-code">USD</span>
-        <i class="fas fa-caret-down"></i>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PearlSMP | Premium Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../Images/logo.webp" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../CSS/Sections/Main.css">
+    <link rel="stylesheet" href="../CSS/Sections/Navbar.css">
+</head>
+
+<body>
+    <div class="container">
+        <header class="shulker-logo">
+            <img src="../Images/logo.webp" alt="PearlSMP">
+        </header>
+
+        <div class="nav-container">
+            <div class="category-header" id="mobile-toggle">
+                <span>Choose Category</span>
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <nav class="nav-links" id="nav-menu">
+                <a href="Index.html">Home</a>
+                <a href="Shop.html">Ranks</a>
+                <a href="Rules.html">Rules</a>
+                <a href="https://discord.com">Discord</a>
+            </nav>
+
+            <div class="user-control-bar">
+                <div class="user-login" onclick="toggleLoginModal()">
+                    <img id="skin-head" src="https://mc-heads.net/avatar/steve" alt="avatar">
+                    <span id="player-name">Login</span>
+                </div>
+                
+                <div class="currency-wrap">
+                    <div class="currency-trigger" id="currency-switch">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span id="current-code">USD</span>
+                        <i class="fas fa-caret-down"></i>
+                    </div>
+                    
+                    <div class="currency-dropdown" id="currency-menu">
+                        <div onclick="setCurrency('INR')">INR</div>
+                        <div onclick="setCurrency('USD')">USD</div>
+                        <div onclick="setCurrency('AUD')">AUD</div>
+                        <div onclick="setCurrency('BRL')">BRL</div>
+                    </div>
+                    
+                    <a href="Cart.html"><i class="fas fa-shopping-basket basket-icon"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <main class="welcome-section">
+            <div class="section-header">
+                <i class="fas fa-home"></i> Welcome to <span>PearlSMP</span>
+            </div>
+            <div class="welcome-body">
+                <p>Welcome</p>
+                <p>If you have made a purchase but haven't received it then please make a ticket in our support Discord server.</p>
+                <p>Contact Email: <a href="mailto:support@pearlsmp.com">support@pearlsmp.com</a></p>
+                <strong>Refund policy</strong>
+                <p>All payments are final and non-refundable. Initiating a chargeback or opening a PayPal dispute will result in a permanent ban.</p>
+            </div>
+        </main>
     </div>
-    <div class="currency-dropdown" id="currency-menu">
-        <div onclick="setCurrency('INR')">INR</div>
-        <div onclick="setCurrency('USD')">USD</div>
+
+    <div id="login-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>PLEASE ENTER YOUR USERNAME TO CONTINUE</h3>
+            <input type="text" id="username-input" placeholder="Username">
+            <button onclick="confirmLogin()">Continue <i class="fas fa-chevron-right"></i></button>
+        </div>
     </div>
-    <a href="Cart.html"><i class="fas fa-shopping-basket basket-icon"></i></a>
-</div>
 
-<div id="login-modal" class="modal-overlay">
-    <div class="modal-content">
-        <h3>PLEASE ENTER YOUR USERNAME TO CONTINUE</h3>
-        <input type="text" id="username-input" placeholder="Username">
-        <button onclick="confirmLogin()">Continue <i class="fas fa-chevron-right"></i></button>
-    </div>
-</div>
+    <script>
+        // Toggle Menus
+        const toggle = document.getElementById('mobile-toggle');
+        const menu = document.getElementById('nav-menu');
+        const curBtn = document.getElementById('currency-switch');
+        const curMenu = document.getElementById('currency-menu');
 
-<script>
-    // Toggle Currency Dropdown
-    const curBtn = document.getElementById('currency-switch');
-    const curMenu = document.getElementById('currency-menu');
-    curBtn.onclick = (e) => {
-        e.stopPropagation();
-        curMenu.classList.toggle('show');
-    };
+        toggle.onclick = () => menu.classList.toggle('active');
+        
+        curBtn.onclick = (e) => {
+            e.stopPropagation();
+            curMenu.classList.toggle('show');
+        };
 
-    function setCurrency(code) {
-        document.getElementById('current-code').innerText = code;
-        curMenu.classList.remove('show');
-        // If USD, you mentioned checkout via PayPal in INR. 
-        // We can track this choice for the Shop.html later.
-    }
-
-    // Toggle Login Modal
-    function updateSkin() {
-        document.getElementById('login-modal').classList.add('active');
-    }
-
-    function confirmLogin() {
-        const name = document.getElementById('username-input').value;
-        if (name.trim() !== "") {
-            document.getElementById('skin-head').src = `https://mc-heads.net/avatar/${name}`;
-            document.getElementById('player-name').innerText = name;
-            document.getElementById('login-modal').classList.remove('active');
+        // Currency Logic
+        function setCurrency(code) {
+            document.getElementById('current-code').innerText = code;
+            curMenu.classList.remove('show');
         }
-    }
 
-    // Close menus if clicking outside
-    window.onclick = () => {
-        curMenu.classList.remove('show');
-    };
-</script>
+        // Login Modal Logic
+        function toggleLoginModal() {
+            document.getElementById('login-modal').classList.add('active');
+        }
+
+        function confirmLogin() {
+            const name = document.getElementById('username-input').value;
+            if (name.trim() !== "") {
+                document.getElementById('skin-head').src = `https://mc-heads.net/avatar/${name}`;
+                document.getElementById('player-name').innerText = name;
+                document.getElementById('login-modal').classList.remove('active');
+            }
+        }
+
+        // Close dropdown if clicking outside
+        window.onclick = () => curMenu.classList.remove('show');
+    </script>
+</body>
+</html>
