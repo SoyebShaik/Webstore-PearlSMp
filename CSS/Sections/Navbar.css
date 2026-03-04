@@ -1,58 +1,72 @@
-/* Navbar.css - PearlSMP Pro Theme */
-:root {
-    --shulker-dark: #111827;
-    --shulker-blue: #3b82f6;
-    --shulker-border: #1f2937;
+/* Currency Dropdown Styling */
+.currency-wrap { position: relative; }
+
+.currency-dropdown {
+    display: none;
+    position: absolute;
+    top: 110%;
+    right: 0;
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 4px;
+    z-index: 100;
+    min-width: 80px;
 }
 
-.nav-container {
-    background: var(--shulker-dark);
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 20px;
-}
+.currency-dropdown.show { display: block; }
 
-.category-header {
-    padding: 18px 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.currency-dropdown div {
+    padding: 10px;
     cursor: pointer;
-    font-weight: 700;
-    text-transform: uppercase;
-    border-bottom: 1px solid var(--shulker-border);
+    font-size: 13px;
+    text-align: center;
 }
 
-.nav-links {
-    display: none; /* Mobile first */
-    flex-direction: column;
+.currency-dropdown div:hover { background: #3b82f6; }
+
+/* Modal / Login Box Styling */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
 }
 
-.nav-links.active { display: flex; }
+.modal-overlay.active { display: flex; }
 
-.nav-links a {
-    padding: 15px 25px;
-    color: #fff;
-    text-decoration: none;
-    border-bottom: 1px solid var(--shulker-border);
-    font-size: 14px;
-    font-weight: 600;
+.modal-content {
+    background: #111827;
+    padding: 25px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    border: 1px solid #1f2937;
 }
 
-/* User & Currency Bar */
-.user-control-bar {
+.modal-content h3 { font-size: 14px; margin-bottom: 20px; color: #fff; }
+
+.modal-content input {
+    width: 100%;
+    padding: 12px;
     background: #0d121f;
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 25px;
+    border: 1px solid #1f2937;
+    color: #fff;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
-.user-login { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-.user-login img { width: 32px; height: 32px; border-radius: 4px; }
-
-.currency-wrap { display: flex; align-items: center; gap: 15px; }
-.currency-trigger { 
-    display: flex; align-items: center; gap: 8px; font-size: 13px; 
-    background: #1e293b; padding: 5px 12px; border-radius: 4px; cursor: pointer;
-}
-.basket-icon { color: var(--shulker-blue); font-size: 18px; }
+.modal-content button {
+    width: 100%;
+    padding: 12px;
+    background: #3b82f6;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-weight: 700;
+    cursor: pointer;
+        }
