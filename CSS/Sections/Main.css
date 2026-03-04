@@ -1,119 +1,53 @@
-@import url(../Components/Palette.css);
-
-.main {
-    padding: 40px;
+/* Main.css - PearlSMP Pro Theme */
+body {
+    background-color: #0a0e18; /* Dark Navy Background */
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
 }
 
-.main-title {
-    margin-bottom: 2em;
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.main-title img {
-    width: 50px;
-    height: 50px;
-    padding: 8px;
-    background-color: #fac562;
-    border-radius: 5px;
-    margin-right: 10px;
-    box-shadow: 0px 0px 5px;
+.shulker-logo {
+    text-align: center;
+    padding: 40px 0;
 }
 
-.main-title h1 {
-    color: var(--primary-tc);
-    font-size: 34px;
-    font-weight: 900;
+.shulker-logo img {
+    max-width: 200px;
 }
 
-.cards {
+.welcome-section {
+    background: #111827;
+    border-radius: 8px;
+    padding: 30px;
+    border-bottom: 4px solid #3b82f6;
+}
+
+.section-header {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #3b82f6;
+    padding-bottom: 10px;
+    width: fit-content;
 }
 
-.card {
-    margin: 10px;
-    width: 90%;
+.section-header span { color: #3b82f6; }
+
+.welcome-body {
+    color: #9ca3af;
+    line-height: 1.7;
+    font-size: 15px;
 }
 
-@media screen and (min-width: 320px) and (max-width: 999px) {
-    .main {
-        padding: 30px;
-    }
-    
-    .m-desktop-title {
-        display: none;
-    }
-    
-    .main-title {
-        display: flex;
-        flex-direction: column;
-        font-size: 14px;
-        text-align: center;
-    }
-    
-    .main-title h1 {
-        margin: 5px;
-    }
-    
-    .m-mobile-title::after {
-        content: '';
-        display: block;
-        width: 70%;
-        height: 3px;
-        background-color: #bebebe;
-        margin: 0 auto;
-    }
-    
-    .card {
-        margin: 10px 0;
-        width: 100% !important;
-    }
-
-    @media screen and (min-width: 424px) {
-        .main h1 {
-            font-size: 40px;
-        }
-    }
-
-    @media screen and (min-width: 767px) {
-        .main {
-            padding: 50px;
-        }
-
-        .main-title {
-            display: flex;
-            flex-direction: row;
-        }
-
-        .m-desktop-title {
-            display: block;
-        }
-
-        .m-mobile-title {
-            display: none;
-        }
-
-        .card {
-            width: 45% !important;
-            margin: 10px;
-        }
-    }
-}
-
-@media screen and (max-width: 1000px) {
-    .main h1 {
-        font-size: 40px !important;
-    }
-}
-
-@media screen and (min-width: 1023px) and (max-width: 1329px) {
-    .card-cosmetics {
-        display: flex !important;
-    }
-
-    .card {
-        margin: 20px !important;
-        width: 40% !important;
-    }
-}
+.welcome-body a { color: #3b82f6; text-decoration: none; }
+.welcome-body strong { color: #fff; display: block; margin-top: 20px; }
