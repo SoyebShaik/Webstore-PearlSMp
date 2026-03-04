@@ -1,72 +1,119 @@
-/* Currency Dropdown Styling */
-.currency-wrap { position: relative; }
+:root {
+    --shulker-dark: #111827;
+    --shulker-blue: #3b82f6;
+    --shulker-border: #1f2937;
+}
+
+.nav-container {
+    background: var(--shulker-dark);
+    border-radius: 4px;
+    margin-top: 10px;
+    border: 1px solid var(--shulker-border);
+}
+
+.category-header {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--shulker-border);
+}
+
+.nav-links {
+    display: none;
+    flex-direction: column;
+}
+
+.nav-links.active { display: flex; }
+
+.nav-links a {
+    padding: 15px 20px;
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 1px solid var(--shulker-border);
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* User & Currency Bar */
+.user-control-bar {
+    background: #0d121f;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    align-items: center;
+}
+
+.user-login { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.user-login img { width: 30px; height: 30px; border-radius: 4px; border: 1px solid #333; }
+
+.currency-wrap { position: relative; display: flex; align-items: center; gap: 10px; }
+.currency-trigger { 
+    display: flex; align-items: center; gap: 6px; font-size: 13px; 
+    background: #1e293b; padding: 5px 12px; border-radius: 4px; cursor: pointer;
+    font-weight: 600;
+}
 
 .currency-dropdown {
     display: none;
     position: absolute;
-    top: 110%;
+    top: 120%;
     right: 0;
-    background: #111827;
-    border: 1px solid #1f2937;
-    border-radius: 4px;
-    z-index: 100;
-    min-width: 80px;
-}
-
-.currency-dropdown.show { display: block; }
-
-.currency-dropdown div {
+    background: var(--shulker-dark);
+    border: 1px solid var(--shulker-blue);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
     padding: 10px;
-    cursor: pointer;
-    font-size: 13px;
-    text-align: center;
+    z-index: 1000;
 }
 
-.currency-dropdown div:hover { background: #3b82f6; }
+.currency-dropdown.show { display: grid; }
+.currency-dropdown div { padding: 5px 10px; cursor: pointer; font-size: 12px; font-weight: bold; }
+.currency-dropdown div:hover { color: var(--shulker-blue); }
 
-/* Modal / Login Box Styling */
+.basket-icon { color: var(--shulker-blue); font-size: 18px; margin-left: 5px; }
+
+/* Modal Overlay */
 .modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.8);
-    z-index: 999;
+    background: rgba(0,0,0,0.85);
+    z-index: 9999;
     align-items: center;
     justify-content: center;
 }
-
 .modal-overlay.active { display: flex; }
-
 .modal-content {
-    background: #111827;
-    padding: 25px;
-    border-radius: 8px;
+    background: var(--shulker-dark);
+    padding: 30px;
+    border-radius: 4px;
+    text-align: center;
     width: 90%;
     max-width: 400px;
-    text-align: center;
-    border: 1px solid #1f2937;
 }
-
-.modal-content h3 { font-size: 14px; margin-bottom: 20px; color: #fff; }
-
+.modal-content h3 { font-size: 14px; margin-bottom: 20px; }
 .modal-content input {
     width: 100%;
     padding: 12px;
     background: #0d121f;
-    border: 1px solid #1f2937;
+    border: 1px solid var(--shulker-border);
     color: #fff;
     margin-bottom: 15px;
     border-radius: 4px;
     box-sizing: border-box;
 }
-
 .modal-content button {
     width: 100%;
     padding: 12px;
-    background: #3b82f6;
+    background: var(--shulker-blue);
     color: #fff;
     border: none;
     border-radius: 4px;
     font-weight: 700;
     cursor: pointer;
-        }
+}
