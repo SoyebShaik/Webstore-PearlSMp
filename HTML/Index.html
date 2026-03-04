@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="shulker-wrapper">
         <header class="shulker-logo">
             <img src="../Images/logo.webp" alt="PearlSMP">
         </header>
@@ -61,11 +61,11 @@
                 <i class="fas fa-home"></i> Welcome to <span>PearlSMP</span>
             </div>
             <div class="welcome-body">
-                <p>Welcome</p>
+                <p>Welcome to the official store of PearlSMP.</p>
                 <p>If you have made a purchase but haven't received it then please make a ticket in our support Discord server.</p>
                 <p>Contact Email: <a href="mailto:support@pearlsmp.com">support@pearlsmp.com</a></p>
                 <strong>Refund policy</strong>
-                <p>All payments are final and non-refundable. Initiating a chargeback or opening a PayPal dispute will result in a permanent ban.</p>
+                <p>All payments are final and non-refundable. Initiating a chargeback will result in a permanent ban.</p>
             </div>
         </main>
     </div>
@@ -79,29 +79,20 @@
     </div>
 
     <script>
-        // Toggle Menus
         const toggle = document.getElementById('mobile-toggle');
         const menu = document.getElementById('nav-menu');
         const curBtn = document.getElementById('currency-switch');
         const curMenu = document.getElementById('currency-menu');
 
         toggle.onclick = () => menu.classList.toggle('active');
-        
-        curBtn.onclick = (e) => {
-            e.stopPropagation();
-            curMenu.classList.toggle('show');
-        };
+        curBtn.onclick = (e) => { e.stopPropagation(); curMenu.classList.toggle('show'); };
 
-        // Currency Logic
         function setCurrency(code) {
             document.getElementById('current-code').innerText = code;
             curMenu.classList.remove('show');
         }
 
-        // Login Modal Logic
-        function toggleLoginModal() {
-            document.getElementById('login-modal').classList.add('active');
-        }
+        function toggleLoginModal() { document.getElementById('login-modal').classList.add('active'); }
 
         function confirmLogin() {
             const name = document.getElementById('username-input').value;
@@ -111,9 +102,7 @@
                 document.getElementById('login-modal').classList.remove('active');
             }
         }
-
-        // Close dropdown if clicking outside
-        window.onclick = () => curMenu.classList.remove('show');
+        window.onclick = () => { curMenu.classList.remove('show'); };
     </script>
 </body>
-</html>
+    </html>
