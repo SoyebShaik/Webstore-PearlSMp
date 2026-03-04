@@ -1,53 +1,49 @@
-/* Main.css - PearlSMP Pro Theme */
 body {
-    background-color: #0a0e18; /* Dark Navy Background */
+    background-color: #0a0e18;
     color: #fff;
     font-family: 'Inter', sans-serif;
     margin: 0;
 }
 
 .container {
-    max-width: 600px;
+    max-width: 500px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 10px;
 }
 
 .shulker-logo {
     text-align: center;
-    padding: 40px 0;
+    padding: 30px 0;
 }
 
 .shulker-logo img {
-    max-width: 200px;
+    max-width: 180px;
 }
 
 .welcome-section {
     background: #111827;
-    border-radius: 8px;
-    padding: 30px;
-    border-bottom: 4px solid #3b82f6;
+    border-radius: 4px;
+    padding: 25px;
+    margin-top: 15px;
+    border-bottom: 3px solid #3b82f6;
 }
 
 .section-header {
-    color: #fff;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #3b82f6;
-    padding-bottom: 10px;
-    width: fit-content;
 }
 
 .section-header span { color: #3b82f6; }
 
 .welcome-body {
     color: #9ca3af;
-    line-height: 1.7;
-    font-size: 15px;
+    line-height: 1.6;
+    font-size: 14px;
 }
 
 .welcome-body a { color: #3b82f6; text-decoration: none; }
-.welcome-body strong { color: #fff; display: block; margin-top: 20px; }
+.welcome-body strong { color: #fff; display: block; margin-top: 15px; }
