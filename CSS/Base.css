@@ -1,13 +1,84 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-@font-face {
-	font-family: 'Panton';
-	src: url(../Fonts/Panton.ttf);
+/* --- FIREMC ORANGE THEME --- */
+:root {
+    --primary-orange: #ff8c00;
+    --dark-orange: #e67e22;
+    --bg-dark: #121212;
+    --text-white: #ffffff;
+    --glow-orange: rgba(255, 140, 0, 0.6);
 }
 
 body {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-    box-sizing: border-box;
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    /* This makes the dark background you see on FireMC */
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
+                url('https://i.ibb.co/3ykfkg5D/Steal-Fun.png'); /* You can change this to a MC screenshot later */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* --- THE LOGO ANIMATION (SHRINK & EXTEND) --- */
+@keyframes shrinkExtend {
+    0% { transform: scaleX(1); }
+    50% { transform: scaleX(1.1); }
+    100% { transform: scaleX(1); }
+}
+
+.logo-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 50px 0;
+}
+
+.server-logo {
+    max-width: 300px;
+    height: auto;
+    animation: shrinkExtend 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px var(--glow-orange));
+}
+
+/* --- TOP RIGHT LOGIN STYLING --- */
+.user-login {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 5px 15px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.user-login:hover {
+    background: rgba(255, 140, 0, 0.1);
+}
+
+.login-text {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+
+.guest-label {
+    font-size: 10px;
+    color: #aaa;
+    text-transform: uppercase;
+}
+
+.click-to-login {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--primary-orange);
+}
+
+#skin-head {
+    width: 35px;
+    height: 35px;
+    border-radius: 4px;
+    border: 2px solid var(--primary-orange);
 }
