@@ -7,12 +7,8 @@
     <link rel="shortcut icon" href="../Images/1000340540-removebg-preview.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="../CSS/Base.css">
-    <link rel="stylesheet" href="../CSS/Sections/Main.css">
-    <link rel="stylesheet" href="../CSS/Sections/Navbar.css">
 </head>
-
 <body>
     <div class="shulker-wrapper">
         <header class="logo-container">
@@ -21,125 +17,99 @@
 
         <div class="stats-container">
             <div class="stat-box">
-                <div class="stat-value">5,064</div>
-                <div class="stat-icon discord-glow"><i class="fab fa-discord"></i></div>
+                <div class="stat-value" id="discord-count">Loading..</div>
+                <div class="stat-icon"><i class="fab fa-discord"></i></div>
             </div>
             <div class="stat-box">
                 <div class="stat-value" id="player-count">Loading..</div>
-                <div class="stat-icon fire-glow"><i class="fas fa-fire"></i></div>
+                <div class="stat-icon"><i class="fas fa-fire"></i></div>
             </div>
         </div>
 
         <div class="nav-container">
-            <div class="category-header" id="mobile-toggle">
-                <i class="fas fa-bars"></i> <span>SELECT A CATEGORY</span>
-            </div>
-
-            <nav class="nav-links" id="nav-menu">
+            <div class="category-header"><i class="fas fa-bars"></i> SELECT A CATEGORY</div>
+            <nav class="nav-links">
                 <a href="Index.html"><i class="fas fa-home"></i> HOME</a>
                 <a href="Shop.html"><i class="fas fa-shopping-cart"></i> RANKS</a>
                 <a href="Rules.html"><i class="fas fa-book"></i> RULES</a>
                 <a href="https://discord.com"><i class="fab fa-discord"></i> DISCORD</a>
             </nav>
-
+            
             <div class="user-control-bar">
                 <div class="user-login" onclick="toggleLoginModal()">
                     <div class="login-text">
-                        <span class="guest-label">Guest</span>
+                        <span class="guest-label">GUEST</span>
                         <span id="player-name" class="click-to-login">CLICK TO LOGIN</span>
                     </div>
                     <img id="skin-head" src="https://mc-heads.net/avatar/steve" alt="avatar">
                 </div>
-                
                 <div class="currency-wrap">
-                    <div class="currency-trigger" id="currency-switch">
-                        <span id="current-code">USD</span>
-                        <i class="fas fa-caret-down"></i>
-                    </div>
-                    <div class="currency-dropdown" id="currency-menu">
-                        <div onclick="setCurrency('INR')">INR</div>
-                        <div onclick="setCurrency('USD')">USD</div>
-                    </div>
+                    <div id="currency-switch"><span>USD</span> <i class="fas fa-caret-down"></i></div>
                     <a href="Cart.html"><i class="fas fa-shopping-basket basket-icon"></i></a>
                 </div>
             </div>
         </div>
 
         <main class="welcome-section">
-            <div class="section-header">
-                <i class="fas fa-fire"></i> FEATURED PACKAGES
-            </div>
-            
+            <h2 class="featured-title">FEATURED PACKAGES</h2>
             <div class="featured-grid" id="featured-packages">
-                <div class="loading-text">Connecting to Tebex...</div>
+                <p style="text-align:center; color:#888;">Fetching packages from Tebex...</p>
             </div>
         </main>
     </div>
 
     <div id="login-modal" class="modal-overlay">
         <div class="modal-content">
-            <h3>ENTER YOUR MINECRAFT USERNAME</h3>
+            <h3>MINECRAFT USERNAME</h3>
             <input type="text" id="username-input" placeholder="Username...">
-            <button onclick="confirmLogin()">CONTINUE <i class="fas fa-chevron-right"></i></button>
+            <button onclick="confirmLogin()">CONTINUE</button>
         </div>
     </div>
 
     <script>
-        // TEBEX INTEGRATION
-        const TEBEX_PUBLIC_TOKEN = '128lk-68be7ee01f103beb904ec9a403b87f86c3a96cfa';
+        const TOKEN = '128lk-68be7ee01f103beb904ec9a403b87f86c3a96cfa';
 
-        async function loadPackages() {
+        async function loadData() {
+            // Load Tebex Packages
             try {
-                const res = await fetch(`https://headless.tebex.io/api/accounts/${TEBEX_PUBLIC_TOKEN}/packages`);
-                const packages = await res.json();
+                const r = await fetch(`https://headless.tebex.io/api/accounts/${TOKEN}/packages`);
+                const data = await r.json();
                 const container = document.getElementById('featured-packages');
-                container.innerHTML = ''; // Clear loading text
+                container.innerHTML = '';
+                
+                data.slice(0, 6).forEach(pkg => {
+                    let glow = 'glow-grey';
+                    const name = pkg.name.toLowerCase();
+                    if(name.includes('god')) glow = 'glow-green';
+                    else if(name.includes('coins')) glow = 'glow-gold';
+                    else if(name.includes('supreme')) glow = 'glow-blue';
 
-                // We only show the first 4 for the "Featured" section
-                packages.slice(0, 4).forEach((pkg, index) => {
-                    const colors = ['glow-green', 'glow-gold', 'glow-grey', 'glow-blue'];
-                    const colorClass = colors[index % colors.length];
-                    
                     container.innerHTML += `
-                        <div class="package-card ${colorClass}">
-                            <div class="package-image">
-                                <img src="${pkg.image || '../Images/logo.png'}" alt="item">
+                        <div class="package-card ${glow}">
+                            <img src="${pkg.image || '../Images/logo.png'}" class="pkg-img">
+                            <div class="pkg-info">
+                                <div class="pkg-name">${pkg.name}</div>
+                                <div class="pkg-price">${pkg.price} ${pkg.currency}</div>
                             </div>
-                            <div class="package-info">
-                                <div class="package-name">${pkg.name}</div>
-                                <div class="package-price">${pkg.price} ${pkg.currency}</div>
-                            </div>
-                        </div>
-                    `;
+                        </div>`;
                 });
-            } catch (e) {
-                console.error("Tebex error:", e);
-            }
+            } catch(e) { console.error(e); }
+
+            // Load Discord (Using your server ID if you have it, otherwise static)
+            document.getElementById('discord-count').innerText = "5,064"; 
+            document.getElementById('player-count').innerText = "124";
         }
+        loadData();
 
-        // Initialize
-        loadPackages();
-
-        // UI Logic
-        const toggle = document.getElementById('mobile-toggle');
-        const menu = document.getElementById('nav-menu');
-        const curBtn = document.getElementById('currency-switch');
-        const curMenu = document.getElementById('currency-menu');
-
-        toggle.onclick = () => menu.classList.toggle('active');
-        curBtn.onclick = (e) => { e.stopPropagation(); curMenu.classList.toggle('show'); };
-        function setCurrency(code) { document.getElementById('current-code').innerText = code; curMenu.classList.remove('show'); }
         function toggleLoginModal() { document.getElementById('login-modal').classList.add('active'); }
         function confirmLogin() {
-            const name = document.getElementById('username-input').value;
-            if (name.trim() !== "") {
-                document.getElementById('skin-head').src = `https://mc-heads.net/avatar/${name}`;
-                document.getElementById('player-name').innerText = name.toUpperCase();
-                document.querySelector('.guest-label').innerText = "Welcome,";
+            const val = document.getElementById('username-input').value;
+            if(val) {
+                document.getElementById('player-name').innerText = val.toUpperCase();
+                document.getElementById('skin-head').src = `https://mc-heads.net/avatar/${val}`;
                 document.getElementById('login-modal').classList.remove('active');
             }
         }
-        window.onclick = () => { curMenu.classList.remove('show'); };
     </script>
 </body>
-    </html>
+                    </html>
