@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>StealFun | Store</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="https://i.ibb.co/3ykfkg5D/Steal-Fun.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../Images/1000340540-removebg-preview.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="../CSS/Base.css">
     <link rel="stylesheet" href="../CSS/Sections/Main.css">
@@ -19,10 +19,20 @@
             <img src="../Images/1000340540-removebg-preview.png" class="server-logo" alt="StealFun Logo">
         </header>
 
+        <div class="stats-container">
+            <div class="stat-box">
+                <div class="stat-value">5,064</div>
+                <div class="stat-icon discord-glow"><i class="fab fa-discord"></i></div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="player-count">Loading..</div>
+                <div class="stat-icon fire-glow"><i class="fas fa-fire"></i></div>
+            </div>
+        </div>
+
         <div class="nav-container">
             <div class="category-header" id="mobile-toggle">
-                <span>SELECT A CATEGORY</span>
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-bars"></i> <span>SELECT A CATEGORY</span>
             </div>
 
             <nav class="nav-links" id="nav-menu">
@@ -46,12 +56,10 @@
                         <span id="current-code">USD</span>
                         <i class="fas fa-caret-down"></i>
                     </div>
-                    
                     <div class="currency-dropdown" id="currency-menu">
                         <div onclick="setCurrency('INR')">INR</div>
                         <div onclick="setCurrency('USD')">USD</div>
                     </div>
-                    
                     <a href="Cart.html"><i class="fas fa-shopping-basket basket-icon"></i></a>
                 </div>
             </div>
@@ -59,17 +67,11 @@
 
         <main class="welcome-section">
             <div class="section-header">
-                <i class="fas fa-fire"></i> Welcome to <span>StealFun</span>
+                <i class="fas fa-fire"></i> FEATURED PACKAGES
             </div>
-            <div class="welcome-body">
-                <p>Welcome to the official store of <strong>StealFun</strong>.</p>
-                <p>If you have made a purchase but haven't received it, please create a ticket in our Discord.</p>
-                <p>Support: <a href="mailto:support@stealfun.com" style="color: var(--primary-orange);">support@stealfun.com</a></p>
-                
-                <div class="refund-box">
-                    <strong>Refund Policy</strong>
-                    <p>All payments are final. Chargebacks result in a permanent ban.</p>
-                </div>
+            
+            <div class="featured-grid" id="featured-packages">
+                <div class="loading-text">Connecting to Tebex...</div>
             </div>
         </main>
     </div>
@@ -77,13 +79,48 @@
     <div id="login-modal" class="modal-overlay">
         <div class="modal-content">
             <h3>ENTER YOUR MINECRAFT USERNAME</h3>
-            <p>To continue shopping, please provide your username.</p>
             <input type="text" id="username-input" placeholder="Username...">
             <button onclick="confirmLogin()">CONTINUE <i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
 
     <script>
+        // TEBEX INTEGRATION
+        const TEBEX_PUBLIC_TOKEN = '128lk-68be7ee01f103beb904ec9a403b87f86c3a96cfa';
+
+        async function loadPackages() {
+            try {
+                const res = await fetch(`https://headless.tebex.io/api/accounts/${TEBEX_PUBLIC_TOKEN}/packages`);
+                const packages = await res.json();
+                const container = document.getElementById('featured-packages');
+                container.innerHTML = ''; // Clear loading text
+
+                // We only show the first 4 for the "Featured" section
+                packages.slice(0, 4).forEach((pkg, index) => {
+                    const colors = ['glow-green', 'glow-gold', 'glow-grey', 'glow-blue'];
+                    const colorClass = colors[index % colors.length];
+                    
+                    container.innerHTML += `
+                        <div class="package-card ${colorClass}">
+                            <div class="package-image">
+                                <img src="${pkg.image || '../Images/logo.png'}" alt="item">
+                            </div>
+                            <div class="package-info">
+                                <div class="package-name">${pkg.name}</div>
+                                <div class="package-price">${pkg.price} ${pkg.currency}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (e) {
+                console.error("Tebex error:", e);
+            }
+        }
+
+        // Initialize
+        loadPackages();
+
+        // UI Logic
         const toggle = document.getElementById('mobile-toggle');
         const menu = document.getElementById('nav-menu');
         const curBtn = document.getElementById('currency-switch');
@@ -91,16 +128,8 @@
 
         toggle.onclick = () => menu.classList.toggle('active');
         curBtn.onclick = (e) => { e.stopPropagation(); curMenu.classList.toggle('show'); };
-
-        function setCurrency(code) {
-            document.getElementById('current-code').innerText = code;
-            curMenu.classList.remove('show');
-        }
-
-        function toggleLoginModal() { 
-            document.getElementById('login-modal').classList.add('active'); 
-        }
-
+        function setCurrency(code) { document.getElementById('current-code').innerText = code; curMenu.classList.remove('show'); }
+        function toggleLoginModal() { document.getElementById('login-modal').classList.add('active'); }
         function confirmLogin() {
             const name = document.getElementById('username-input').value;
             if (name.trim() !== "") {
@@ -108,10 +137,9 @@
                 document.getElementById('player-name').innerText = name.toUpperCase();
                 document.querySelector('.guest-label').innerText = "Welcome,";
                 document.getElementById('login-modal').classList.remove('active');
-                localStorage.setItem('mc_username', name);
             }
         }
         window.onclick = () => { curMenu.classList.remove('show'); };
     </script>
 </body>
-            </html>
+    </html>
