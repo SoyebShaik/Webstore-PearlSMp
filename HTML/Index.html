@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../Images/1000340540-removebg-preview.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../CSS/Base.css">
 </head>
 <body>
@@ -37,37 +37,64 @@
     </div>
 
     <div class="main-content">
-        <div class="category-header">
-            <i class="fas fa-bars"></i> SELECT A CATEGORY
+        <div class="category-wrapper">
+            <div class="category-header" onclick="toggleCategories()">
+                <i class="fas fa-bars"></i> SELECT A CATEGORY
+            </div>
+            <div id="category-menu" class="category-menu">
+                <a href="Index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="Shop.html"><i class="fas fa-shopping-cart"></i> Ranks</a>
+                <a href="Coins.html"><i class="fas fa-coins"></i> Coins</a>
+                <a href="Rules.html"><i class="fas fa-book"></i> Rules</a>
+                <a href="https://discord.gg/stealfun"><i class="fab fa-discord"></i> Discord</a>
+            </div>
         </div>
 
         <h2 class="featured-title">FEATURED PACKAGES</h2>
-        
         <div class="featured-grid" id="featured-packages">
             <p style="text-align:center; color:#888;">Fetching packages from Tebex...</p>
         </div>
     </div>
 
-    <div id="login-modal" class="modal-overlay">
-        <div class="modal-content">
-            <h3>MINECRAFT USERNAME</h3>
-            <input type="text" id="username-input" placeholder="Username...">
-            <button onclick="confirmLogin()">CONTINUE</button>
+    <div id="login-modal" class="modal-overlay" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h2>Please enter your username to continue</h2>
+            <p class="modal-subtext">Usernames can't contain spaces, they can have any letter and number, and they are Case Sensitive.</p>
+            <div class="input-wrapper">
+                <img id="modal-face" src="https://mc-heads.net/avatar/MHF_Question" alt="face">
+                <input type="text" id="username-input" placeholder="Username..." oninput="updateModalFace(this.value)">
+            </div>
+            <button class="continue-btn" onclick="confirmLogin()">CONTINUE</button>
+            <div class="bedrock-toggle">
+                <span>Bedrock user?</span>
+                <div class="toggle-box">No</div>
+            </div>
         </div>
     </div>
 
     <script>
         const TOKEN = '128lk-68be7ee01f103beb904ec9a403b87f86c3a96cfa';
-        
-        // ==========================================
-        // PUT YOUR DISCORD SERVER ID HERE 
-        // Example: '123456789012345678'
-        // Note: You MUST enable "Server Widget" in your Discord Server Settings for this to work!
         const DISCORD_SERVER_ID = '1435586958570295408'; 
-        // ==========================================
+
+        // Toggle Category Menu
+        function toggleCategories() {
+            document.getElementById('category-menu').classList.toggle('active');
+        }
+
+        // Close menu if clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.category-header')) {
+                var dropdowns = document.getElementsByClassName("category-menu");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('active')) {
+                        openDropdown.classList.remove('active');
+                    }
+                }
+            }
+        }
 
         async function loadData() {
-            // 1. Fetch Tebex
             try {
                 const r = await fetch(`https://headless.tebex.io/api/accounts/${TOKEN}/packages`);
                 const data = await r.json();
@@ -92,29 +119,30 @@
                 });
             } catch(e) { console.error(e); }
 
-            // 2. Fetch Real Discord Count
-            if(DISCORD_SERVER_ID !== '1435586958570295408') {
-                try {
-                    const dRes = await fetch(`https://discord.com/api/guilds/${DISCORD_SERVER_ID}/widget.json`);
-                    const dData = await dRes.json();
-                    document.getElementById('discord-count').innerText = dData.presence_count.toLocaleString();
-                } catch (e) { document.getElementById('discord-count').innerText = "Offline"; }
-            } else {
-                document.getElementById('discord-count').innerText = "Set ID!";
+            try {
+                const dRes = await fetch(`https://discord.com/api/guilds/${DISCORD_SERVER_ID}/widget.json`);
+                const dData = await dRes.json();
+                document.getElementById('discord-count').innerText = dData.presence_count.toLocaleString();
+            } catch (e) { 
+                document.getElementById('discord-count').innerText = "Offline"; 
             }
+            document.getElementById('player-count').innerText = "124";
         }
         loadData();
 
-        // Login UI
         function toggleLoginModal() { document.getElementById('login-modal').classList.add('active'); }
+        function closeModal() { document.getElementById('login-modal').classList.remove('active'); }
+        function updateModalFace(val) {
+            document.getElementById('modal-face').src = val ? `https://mc-heads.net/avatar/${val}` : `https://mc-heads.net/avatar/MHF_Question`;
+        }
         function confirmLogin() {
             const val = document.getElementById('username-input').value;
             if(val) {
                 document.getElementById('player-name').innerText = val.toUpperCase();
                 document.getElementById('skin-head').src = `https://mc-heads.net/avatar/${val}`;
-                document.getElementById('login-modal').classList.remove('active');
+                closeModal();
             }
         }
     </script>
 </body>
-</html>
+                                         </html>
