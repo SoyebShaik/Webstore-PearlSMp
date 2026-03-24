@@ -10,52 +10,42 @@
     <link rel="stylesheet" href="../CSS/Base.css">
 </head>
 <body>
-    <div class="shulker-wrapper">
-        <header class="logo-container">
-            <img src="../Images/1000340540-removebg-preview.png" class="server-logo" alt="StealFun Logo">
-        </header>
 
-        <div class="stats-container">
-            <div class="stat-box">
-                <div class="stat-value" id="discord-count">Loading..</div>
-                <div class="stat-icon"><i class="fab fa-discord"></i></div>
+    <div class="top-bar">
+        <div class="user-login" onclick="toggleLoginModal()">
+            <div class="login-text">
+                <span class="guest-label">Guest</span>
+                <span id="player-name" class="click-to-login">CLICK TO LOGIN</span>
             </div>
-            <div class="stat-box">
-                <div class="stat-value" id="player-count">Loading..</div>
-                <div class="stat-icon"><i class="fas fa-fire"></i></div>
-            </div>
+            <img id="skin-head" src="https://mc-heads.net/avatar/MHF_Question" alt="avatar">
+        </div>
+    </div>
+
+    <header class="logo-container">
+        <img src="../Images/1000340540-removebg-preview.png" class="server-logo" alt="StealFun Logo">
+    </header>
+
+    <div class="stats-container">
+        <div class="stat-box">
+            <div class="stat-value" id="discord-count">Loading..</div>
+            <div class="stat-icon"><i class="fab fa-discord"></i></div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value" id="player-count">Loading..</div>
+            <div class="stat-icon"><i class="fas fa-fire"></i></div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="category-header">
+            <i class="fas fa-bars"></i> SELECT A CATEGORY
         </div>
 
-        <div class="nav-container">
-            <div class="category-header"><i class="fas fa-bars"></i> SELECT A CATEGORY</div>
-            <nav class="nav-links">
-                <a href="Index.html"><i class="fas fa-home"></i> HOME</a>
-                <a href="Shop.html"><i class="fas fa-shopping-cart"></i> RANKS</a>
-                <a href="Rules.html"><i class="fas fa-book"></i> RULES</a>
-                <a href="https://discord.com"><i class="fab fa-discord"></i> DISCORD</a>
-            </nav>
-            
-            <div class="user-control-bar">
-                <div class="user-login" onclick="toggleLoginModal()">
-                    <div class="login-text">
-                        <span class="guest-label">GUEST</span>
-                        <span id="player-name" class="click-to-login">CLICK TO LOGIN</span>
-                    </div>
-                    <img id="skin-head" src="https://mc-heads.net/avatar/steve" alt="avatar">
-                </div>
-                <div class="currency-wrap">
-                    <div id="currency-switch"><span>USD</span> <i class="fas fa-caret-down"></i></div>
-                    <a href="Cart.html"><i class="fas fa-shopping-basket basket-icon"></i></a>
-                </div>
-            </div>
+        <h2 class="featured-title">FEATURED PACKAGES</h2>
+        
+        <div class="featured-grid" id="featured-packages">
+            <p style="text-align:center; color:#888;">Fetching packages from Tebex...</p>
         </div>
-
-        <main class="welcome-section">
-            <h2 class="featured-title">FEATURED PACKAGES</h2>
-            <div class="featured-grid" id="featured-packages">
-                <p style="text-align:center; color:#888;">Fetching packages from Tebex...</p>
-            </div>
-        </main>
     </div>
 
     <div id="login-modal" class="modal-overlay">
@@ -68,9 +58,16 @@
 
     <script>
         const TOKEN = '128lk-68be7ee01f103beb904ec9a403b87f86c3a96cfa';
+        
+        // ==========================================
+        // PUT YOUR DISCORD SERVER ID HERE 
+        // Example: '123456789012345678'
+        // Note: You MUST enable "Server Widget" in your Discord Server Settings for this to work!
+        const DISCORD_SERVER_ID = '1435586958570295408'; 
+        // ==========================================
 
         async function loadData() {
-            // Load Tebex Packages
+            // 1. Fetch Tebex
             try {
                 const r = await fetch(`https://headless.tebex.io/api/accounts/${TOKEN}/packages`);
                 const data = await r.json();
@@ -95,12 +92,20 @@
                 });
             } catch(e) { console.error(e); }
 
-            // Load Discord (Using your server ID if you have it, otherwise static)
-            document.getElementById('discord-count').innerText = "5,064"; 
-            document.getElementById('player-count').innerText = "124";
+            // 2. Fetch Real Discord Count
+            if(DISCORD_SERVER_ID !== '1435586958570295408') {
+                try {
+                    const dRes = await fetch(`https://discord.com/api/guilds/${DISCORD_SERVER_ID}/widget.json`);
+                    const dData = await dRes.json();
+                    document.getElementById('discord-count').innerText = dData.presence_count.toLocaleString();
+                } catch (e) { document.getElementById('discord-count').innerText = "Offline"; }
+            } else {
+                document.getElementById('discord-count').innerText = "Set ID!";
+            }
         }
         loadData();
 
+        // Login UI
         function toggleLoginModal() { document.getElementById('login-modal').classList.add('active'); }
         function confirmLogin() {
             const val = document.getElementById('username-input').value;
@@ -112,4 +117,4 @@
         }
     </script>
 </body>
-                    </html>
+</html>
