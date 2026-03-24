@@ -1,73 +1,67 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
 
 :root {
-    --primary-orange: #ff8c00 !important;
-    --dark-orange: #e67e22 !important;
+    --primary-orange: #ff8c00;
+    --bg-dark: #121213;
+    --card-bg: #1e1e22;
 }
 
 body {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-    background-color: #0d0d0d !important;
-    color: white !important;
+    background-color: var(--bg-dark);
+    color: white;
 }
 
-/* --- LOGO ANIMATION --- */
-.logo-container {
-    width: 100%;
+/* --- LOGO & STATS --- */
+.logo-container { width: 100%; display: flex; justify-content: center; padding: 30px 0; }
+.server-logo { max-width: 280px; animation: shrinkExtend 3s ease-in-out infinite; filter: drop-shadow(0 0 15px rgba(255, 140, 0, 0.4)); }
+
+@keyframes shrinkExtend { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(1.08); } }
+
+.stats-container { display: flex; justify-content: center; gap: 40px; margin-bottom: 25px; }
+.stat-box { display: flex; flex-direction: column; align-items: center; }
+.stat-value { background: var(--primary-orange); color: #000; padding: 2px 18px; border-radius: 20px; font-weight: 800; font-size: 13px; margin-bottom: 5px; }
+.stat-icon i { font-size: 32px; color: var(--primary-orange); }
+
+/* --- NAVIGATION --- */
+.nav-container { background: #1a1a1d; border-bottom: 2px solid var(--primary-orange); display: flex; justify-content: space-between; align-items: center; padding: 10px 5%; }
+.category-header { background: #252529; color: var(--primary-orange); padding: 10px 20px; border-radius: 5px; font-weight: 700; cursor: pointer; display: flex; gap: 10px; align-items: center; }
+
+/* --- FEATURED PACKAGES GRID --- */
+.section-header { font-weight: 800; color: var(--primary-orange); font-size: 22px; margin: 40px 0 20px 0; letter-spacing: 1px; }
+.featured-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+
+.package-card {
+    background: var(--card-bg);
+    border-radius: 8px;
     display: flex;
-    justify-content: center;
-    padding: 30px 0;
-}
-
-.server-logo {
-    max-width: 300px;
-    height: auto;
-    animation: shrinkExtend 3s ease-in-out infinite;
-    filter: drop-shadow(0 0 15px rgba(255, 140, 0, 0.5));
-}
-
-@keyframes shrinkExtend {
-    0% { transform: scaleX(1); }
-    50% { transform: scaleX(1.1); }
-    100% { transform: scaleX(1); }
-}
-
-/* --- KILL ALL BLUE COLORS (THE OVERRIDE) --- */
-
-/* Changes "Welcome to" and "StealFun" titles to Orange */
-.section-header, .section-header span, .section-header i, 
-.welcome-body strong, .welcome-body b, .welcome-section h2 {
-    color: var(--primary-orange) !important;
-}
-
-/* Changes the Navigation Bar/Category Bar to Orange */
-.category-header {
-    background: var(--primary-orange) !important;
-    color: #000 !important;
-    font-weight: 800 !important;
-}
-
-.nav-container {
-    border-bottom: 2px solid var(--primary-orange) !important;
-}
-
-/* Changes "Click to Login" text to Orange */
-.click-to-login {
-    color: var(--primary-orange) !important;
-}
-
-/* Fixes the Minecraft head border */
-#skin-head {
-    border: 2px solid var(--primary-orange) !important;
-}
-
-/* Changes any buttons or links to Orange */
-a, button {
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #333;
     transition: 0.3s;
 }
 
-a:hover {
-    color: var(--primary-orange) !important;
-}
+.package-image img { width: 80px; height: 80px; border-radius: 5px; margin-right: 20px; }
+.package-name { font-weight: 700; font-size: 18px; }
+.package-price { color: #ccc; font-size: 14px; }
+
+/* --- THE GLOWS (Matching your screenshot) --- */
+.glow-green { border: 2px solid #4ade80 !important; }
+.glow-green .package-name { color: #4ade80; }
+
+.glow-gold { border: 2px solid #fbbf24 !important; }
+.glow-gold .package-name { color: #fbbf24; }
+
+.glow-grey { border: 2px solid #94a3b8 !important; }
+.glow-grey .package-name { color: #94a3b8; }
+
+.glow-blue { border: 2px solid #38bdf8 !important; }
+.glow-blue .package-name { color: #38bdf8; }
+
+/* --- LOGIN BOX --- */
+.user-login { display: flex; align-items: center; gap: 10px; cursor: pointer; background: #252529; padding: 5px 15px; border-radius: 5px; }
+.guest-label { font-size: 10px; color: #888; display: block; }
+.click-to-login { font-size: 12px; font-weight: 700; color: var(--primary-orange); }
+#skin-head { width: 35px; border: 2px solid var(--primary-orange); border-radius: 3px; }
