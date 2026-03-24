@@ -1,84 +1,73 @@
-/* --- FIREMC ORANGE THEME --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
 :root {
-    --primary-orange: #ff8c00;
-    --dark-orange: #e67e22;
-    --bg-dark: #121212;
-    --text-white: #ffffff;
-    --glow-orange: rgba(255, 140, 0, 0.6);
+    --primary-orange: #ff8c00 !important;
+    --dark-orange: #e67e22 !important;
 }
 
 body {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-    background-color: var(--bg-dark);
-    color: var(--text-white);
-    /* This makes the dark background you see on FireMC */
-    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
-                url('https://i.ibb.co/3ykfkg5D/Steal-Fun.png'); /* You can change this to a MC screenshot later */
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    background-color: #0d0d0d !important;
+    color: white !important;
 }
 
-/* --- THE LOGO ANIMATION (SHRINK & EXTEND) --- */
-@keyframes shrinkExtend {
-    0% { transform: scaleX(1); }
-    50% { transform: scaleX(1.1); }
-    100% { transform: scaleX(1); }
-}
-
+/* --- LOGO ANIMATION --- */
 .logo-container {
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: 50px 0;
+    padding: 30px 0;
 }
 
 .server-logo {
     max-width: 300px;
     height: auto;
     animation: shrinkExtend 3s ease-in-out infinite;
-    filter: drop-shadow(0 0 20px var(--glow-orange));
+    filter: drop-shadow(0 0 15px rgba(255, 140, 0, 0.5));
 }
 
-/* --- TOP RIGHT LOGIN STYLING --- */
-.user-login {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 5px 15px;
-    border-radius: 8px;
+@keyframes shrinkExtend {
+    0% { transform: scaleX(1); }
+    50% { transform: scaleX(1.1); }
+    100% { transform: scaleX(1); }
+}
+
+/* --- KILL ALL BLUE COLORS (THE OVERRIDE) --- */
+
+/* Changes "Welcome to" and "StealFun" titles to Orange */
+.section-header, .section-header span, .section-header i, 
+.welcome-body strong, .welcome-body b, .welcome-section h2 {
+    color: var(--primary-orange) !important;
+}
+
+/* Changes the Navigation Bar/Category Bar to Orange */
+.category-header {
+    background: var(--primary-orange) !important;
+    color: #000 !important;
+    font-weight: 800 !important;
+}
+
+.nav-container {
+    border-bottom: 2px solid var(--primary-orange) !important;
+}
+
+/* Changes "Click to Login" text to Orange */
+.click-to-login {
+    color: var(--primary-orange) !important;
+}
+
+/* Fixes the Minecraft head border */
+#skin-head {
+    border: 2px solid var(--primary-orange) !important;
+}
+
+/* Changes any buttons or links to Orange */
+a, button {
     transition: 0.3s;
 }
 
-.user-login:hover {
-    background: rgba(255, 140, 0, 0.1);
-}
-
-.login-text {
-    display: flex;
-    flex-direction: column;
-    text-align: right;
-}
-
-.guest-label {
-    font-size: 10px;
-    color: #aaa;
-    text-transform: uppercase;
-}
-
-.click-to-login {
-    font-size: 12px;
-    font-weight: bold;
-    color: var(--primary-orange);
-}
-
-#skin-head {
-    width: 35px;
-    height: 35px;
-    border-radius: 4px;
-    border: 2px solid var(--primary-orange);
+a:hover {
+    color: var(--primary-orange) !important;
 }
