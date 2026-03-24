@@ -27,11 +27,11 @@
 
     <div class="stats-container">
         <div class="stat-box">
-            <div class="stat-value" id="discord-count">Loading..</div>
+            <div class="stat-value" id="discord-count">0</div>
             <div class="stat-icon"><i class="fab fa-discord"></i></div>
         </div>
         <div class="stat-box">
-            <div class="stat-value" id="player-count">Loading..</div>
+            <div class="stat-value" id="player-count">124</div>
             <div class="stat-icon"><i class="fas fa-fire"></i></div>
         </div>
     </div>
@@ -43,28 +43,30 @@
             </div>
             <div id="category-menu" class="category-menu">
                 <a href="Index.html"><i class="fas fa-home"></i> Home</a>
-                <a href="Shop.html"><i class="fas fa-shopping-cart"></i> Ranks</a>
-                <a href="Coins.html"><i class="fas fa-coins"></i> Coins</a>
-                <a href="Rules.html"><i class="fas fa-book"></i> Rules</a>
+                <a href="#"><i class="fas fa-shopping-cart"></i> Ranks</a>
+                <a href="#"><i class="fas fa-coins"></i> Coins</a>
                 <a href="https://discord.gg/stealfun"><i class="fab fa-discord"></i> Discord</a>
             </div>
         </div>
 
         <h2 class="featured-title">FEATURED PACKAGES</h2>
         <div class="featured-grid" id="featured-packages">
-            <p style="text-align:center; color:#888;">Fetching packages from Tebex...</p>
+            <p style="text-align:center; color:#888;">Loading packages...</p>
         </div>
     </div>
 
     <div id="login-modal" class="modal-overlay" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h2>Please enter your username to continue</h2>
-            <p class="modal-subtext">Usernames can't contain spaces, they can have any letter and number, and they are Case Sensitive.</p>
+            <p class="modal-subtext">Usernames are Case Sensitive and cannot contain spaces.</p>
+            
             <div class="input-wrapper">
                 <img id="modal-face" src="https://mc-heads.net/avatar/MHF_Question" alt="face">
                 <input type="text" id="username-input" placeholder="Username..." oninput="updateModalFace(this.value)">
             </div>
+
             <button class="continue-btn" onclick="confirmLogin()">CONTINUE</button>
+
             <div class="bedrock-toggle">
                 <span>Bedrock user?</span>
                 <div class="toggle-box">No</div>
@@ -73,43 +75,30 @@
     </div>
 
     <script>
-        const TOKEN = '128lk-68be7ee01f103beb904ec9a403b87f86c3a96cfa';
-        const DISCORD_SERVER_ID = '1435586958570295408'; 
+        const TOKEN = '128lk-68be7ee01f103beb904ec9a403b87f86c3a96cfa'; //
+        const DISCORD_SERVER_ID = '1435586958570295408'; //
 
-        // Toggle Category Menu
-        function toggleCategories() {
-            document.getElementById('category-menu').classList.toggle('active');
-        }
+        function toggleCategories() { document.getElementById('category-menu').classList.toggle('active'); }
+        function toggleLoginModal() { document.getElementById('login-modal').classList.add('active'); }
+        function closeModal() { document.getElementById('login-modal').classList.remove('active'); }
 
-        // Close menu if clicking outside
-        window.onclick = function(event) {
-            if (!event.target.matches('.category-header')) {
-                var dropdowns = document.getElementsByClassName("category-menu");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('active')) {
-                        openDropdown.classList.remove('active');
-                    }
-                }
+        // Close dropdown if clicking elsewhere
+        window.addEventListener('click', function(e) {
+            if (!document.querySelector('.category-wrapper').contains(e.target)) {
+                document.getElementById('category-menu').classList.remove('active');
             }
-        }
+        });
 
         async function loadData() {
+            // Fetch Packages
             try {
                 const r = await fetch(`https://headless.tebex.io/api/accounts/${TOKEN}/packages`);
                 const data = await r.json();
                 const container = document.getElementById('featured-packages');
                 container.innerHTML = '';
-                
                 data.slice(0, 6).forEach(pkg => {
-                    let glow = 'glow-grey';
-                    const name = pkg.name.toLowerCase();
-                    if(name.includes('god')) glow = 'glow-green';
-                    else if(name.includes('coins')) glow = 'glow-gold';
-                    else if(name.includes('supreme')) glow = 'glow-blue';
-
                     container.innerHTML += `
-                        <div class="package-card ${glow}">
+                        <div class="package-card">
                             <img src="${pkg.image || '../Images/logo.png'}" class="pkg-img">
                             <div class="pkg-info">
                                 <div class="pkg-name">${pkg.name}</div>
@@ -117,24 +106,22 @@
                             </div>
                         </div>`;
                 });
-            } catch(e) { console.error(e); }
+            } catch(e) { console.error("Tebex Error", e); }
 
+            // Fetch Discord count
             try {
                 const dRes = await fetch(`https://discord.com/api/guilds/${DISCORD_SERVER_ID}/widget.json`);
                 const dData = await dRes.json();
-                document.getElementById('discord-count').innerText = dData.presence_count.toLocaleString();
+                document.getElementById('discord-count').innerText = dData.presence_count || 0;
             } catch (e) { 
-                document.getElementById('discord-count').innerText = "Offline"; 
+                document.getElementById('discord-count').innerText = "OFFLINE";
             }
-            document.getElementById('player-count').innerText = "124";
         }
-        loadData();
-
-        function toggleLoginModal() { document.getElementById('login-modal').classList.add('active'); }
-        function closeModal() { document.getElementById('login-modal').classList.remove('active'); }
+        
         function updateModalFace(val) {
             document.getElementById('modal-face').src = val ? `https://mc-heads.net/avatar/${val}` : `https://mc-heads.net/avatar/MHF_Question`;
         }
+
         function confirmLogin() {
             const val = document.getElementById('username-input').value;
             if(val) {
@@ -143,6 +130,8 @@
                 closeModal();
             }
         }
+
+        loadData();
     </script>
 </body>
-                                         </html>
+    </html>
