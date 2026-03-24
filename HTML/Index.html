@@ -2,44 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PearlSMP | Premium Store</title>
+    <title>StealFun | Store</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../Images/logo.webp" type="image/x-icon">
+    <link rel="shortcut icon" href="https://i.ibb.co/3ykfkg5D/Steal-Fun.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     
+    <link rel="stylesheet" href="../CSS/Base.css">
     <link rel="stylesheet" href="../CSS/Sections/Main.css">
     <link rel="stylesheet" href="../CSS/Sections/Navbar.css">
 </head>
 
 <body>
     <div class="shulker-wrapper">
-        <header class="shulker-logo">
-            <img src="../Images/logo.webp" alt="PearlSMP">
+        <header class="logo-container">
+            <img src="https://i.ibb.co/3ykfkg5D/Steal-Fun.png" class="server-logo" alt="StealFun Logo">
         </header>
 
         <div class="nav-container">
             <div class="category-header" id="mobile-toggle">
-                <span>Choose Category</span>
+                <span>SELECT A CATEGORY</span>
                 <i class="fas fa-bars"></i>
             </div>
 
             <nav class="nav-links" id="nav-menu">
-                <a href="Index.html">Home</a>
-                <a href="Shop.html">Ranks</a>
-                <a href="Rules.html">Rules</a>
-                <a href="https://discord.com">Discord</a>
+                <a href="Index.html"><i class="fas fa-home"></i> HOME</a>
+                <a href="Shop.html"><i class="fas fa-shopping-cart"></i> RANKS</a>
+                <a href="Rules.html"><i class="fas fa-book"></i> RULES</a>
+                <a href="https://discord.com"><i class="fab fa-discord"></i> DISCORD</a>
             </nav>
 
             <div class="user-control-bar">
                 <div class="user-login" onclick="toggleLoginModal()">
+                    <div class="login-text">
+                        <span class="guest-label">Guest</span>
+                        <span id="player-name" class="click-to-login">CLICK TO LOGIN</span>
+                    </div>
                     <img id="skin-head" src="https://mc-heads.net/avatar/steve" alt="avatar">
-                    <span id="player-name">Login</span>
                 </div>
                 
                 <div class="currency-wrap">
                     <div class="currency-trigger" id="currency-switch">
-                        <i class="fas fa-money-bill-wave"></i>
                         <span id="current-code">USD</span>
                         <i class="fas fa-caret-down"></i>
                     </div>
@@ -47,8 +50,6 @@
                     <div class="currency-dropdown" id="currency-menu">
                         <div onclick="setCurrency('INR')">INR</div>
                         <div onclick="setCurrency('USD')">USD</div>
-                        <div onclick="setCurrency('AUD')">AUD</div>
-                        <div onclick="setCurrency('BRL')">BRL</div>
                     </div>
                     
                     <a href="Cart.html"><i class="fas fa-shopping-basket basket-icon"></i></a>
@@ -58,23 +59,27 @@
 
         <main class="welcome-section">
             <div class="section-header">
-                <i class="fas fa-home"></i> Welcome to <span>PearlSMP</span>
+                <i class="fas fa-fire"></i> Welcome to <span>StealFun</span>
             </div>
             <div class="welcome-body">
-                <p>Welcome to the official store of PearlSMP.</p>
-                <p>If you have made a purchase but haven't received it then please make a ticket in our support Discord server.</p>
-                <p>Contact Email: <a href="mailto:support@pearlsmp.com">support@pearlsmp.com</a></p>
-                <strong>Refund policy</strong>
-                <p>All payments are final and non-refundable. Initiating a chargeback will result in a permanent ban.</p>
+                <p>Welcome to the official store of <strong>StealFun</strong>.</p>
+                <p>If you have made a purchase but haven't received it, please create a ticket in our Discord.</p>
+                <p>Support: <a href="mailto:support@stealfun.com" style="color: var(--primary-orange);">support@stealfun.com</a></p>
+                
+                <div class="refund-box">
+                    <strong>Refund Policy</strong>
+                    <p>All payments are final. Chargebacks result in a permanent ban.</p>
+                </div>
             </div>
         </main>
     </div>
 
     <div id="login-modal" class="modal-overlay">
         <div class="modal-content">
-            <h3>PLEASE ENTER YOUR USERNAME TO CONTINUE</h3>
-            <input type="text" id="username-input" placeholder="Username">
-            <button onclick="confirmLogin()">Continue <i class="fas fa-chevron-right"></i></button>
+            <h3>ENTER YOUR MINECRAFT USERNAME</h3>
+            <p>To continue shopping, please provide your username.</p>
+            <input type="text" id="username-input" placeholder="Username...">
+            <button onclick="confirmLogin()">CONTINUE <i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
 
@@ -92,17 +97,21 @@
             curMenu.classList.remove('show');
         }
 
-        function toggleLoginModal() { document.getElementById('login-modal').classList.add('active'); }
+        function toggleLoginModal() { 
+            document.getElementById('login-modal').classList.add('active'); 
+        }
 
         function confirmLogin() {
             const name = document.getElementById('username-input').value;
             if (name.trim() !== "") {
                 document.getElementById('skin-head').src = `https://mc-heads.net/avatar/${name}`;
-                document.getElementById('player-name').innerText = name;
+                document.getElementById('player-name').innerText = name.toUpperCase();
+                document.querySelector('.guest-label').innerText = "Welcome,";
                 document.getElementById('login-modal').classList.remove('active');
+                localStorage.setItem('mc_username', name);
             }
         }
         window.onclick = () => { curMenu.classList.remove('show'); };
     </script>
 </body>
-</html>
+            </html>
